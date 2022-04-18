@@ -19,3 +19,20 @@
 * Aminity Table: have amenitiy _id as primary key and aminity name as filed. Relationship (one to many) with room aminities table
 
 * Room_Amenities Table: have aminity_id from aminity table, room_id from room table as forign keys, and room_aminity_id as composite key generated using foreign keys combined together
+
+
+![](ERDs-lab12.png)
+
+#### ERD explanation
+
+* Hotel Table: have an int primary key, and it has the fields of name, city, state, address, and phone number as nvarchar type. Relationship is (one-to-many) with table Hotle_Room.
+
+* HotelRoom Table: have HotelID as int  forign composite key , RoomNumber int composite key,RoomId as int foreign keys,  Rate decimal, pet_fiendly bit.
+ 
+* Room Table: have  Id as primary key int, and have Name nvarchar and layout int as fields. Relationship is (one to many) with table HotelRoom and (one to many) with Room_Amenities table.
+
+* The Room Layout Table: have the fields:  one bedroom, two bedroom, cozy studio. Relationship is (one to many) with Room table.
+
+* Aminities Table: have ID as int primary key and Name nvarchar as filed. Relationship (one to many) with RoomAminities table
+
+* RoomAmenities Table: have AminitiesID int composite forign key, RoomID int composite forign key.
