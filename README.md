@@ -36,3 +36,15 @@
 * Aminities Table: have ID as int primary key and Name nvarchar as filed. Relationship (one to many) with RoomAminities table
 
 * RoomAmenities Table: have AminitiesID int composite forign key, RoomID int composite forign key.
+
+Confirm in POSTMAN
+
+![](get.png)
+
+![](getsepec.png)
+
+![](post.png)
+
+![](put.png)
+
+![](delete.png)
