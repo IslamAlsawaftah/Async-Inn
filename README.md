@@ -2,6 +2,10 @@
 
 #### Islam Alsawaftah / 13-4-2022
 
+refactor the project to allow and implement dependency injection. keep the current behavior of our API server the same, and only refactoring the architecture.
+
+Dependency Injection (DI) is a software design pattern. It allows us to develop loosely-coupled code. 
+
 #### ERD for web based API for a local hotel asset management system.
 
 ![](ERDs.png)
