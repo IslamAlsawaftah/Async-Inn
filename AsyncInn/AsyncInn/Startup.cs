@@ -32,11 +32,14 @@ namespace AsyncInn
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
+            // whenever we send a request controller will ask for an instance from IRoom, service will be implement
+            // mapping between interface implementation and service
+            // map two things: inter face and service
             services.AddTransient<IRoom, RoomServieces>();
             services.AddTransient<IHotel, HotelServices>();
             services.AddTransient<IAmenity, AmenityServieces>();
 
-            services.AddControllers();
+            services.AddControllers(); // register my controller
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
