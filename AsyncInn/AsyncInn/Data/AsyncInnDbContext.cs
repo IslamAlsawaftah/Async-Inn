@@ -9,6 +9,8 @@ namespace AsyncInn.Data
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<HotelRoom> HotelRooms { get; set; }
+        public DbSet<RoomAmenity> RoomAmenities { get; set; }
         public AsyncInnDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -35,6 +37,16 @@ namespace AsyncInn.Data
              new Room { Id = 3, Name = "Two Bedroom", Layout = 2 }
 
            );
+            // every table should have a primary key,  HotelRoom didnt have it so we solve it like this:
+            modelBuilder.Entity<HotelRoom>().HasKey(
+                // new object , this object will be the PK
+                hotelroom => new { hotelroom.RoomNum, hotelroom.HotelId } // define composit key, marked as primary key
+                );
+            // every table should have a primary key,  HotelRoom didnt have it so we solve it like this:
+            modelBuilder.Entity<RoomAmenity>().HasKey(
+                // new object , this object will be the PK
+                roomamenity => new { roomamenity.AmenetiesID, roomamenity.RoomID } // define composit key, marked as primary key
+                );
         }
     }
 }

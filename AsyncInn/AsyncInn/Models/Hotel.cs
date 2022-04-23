@@ -1,4 +1,6 @@
-﻿namespace AsyncInn.Models
+﻿using System.Collections.Generic;
+
+namespace AsyncInn.Models
 {
     public class Hotel
     {
@@ -9,5 +11,8 @@
         public string State { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
+        // add new navigation property as a list because relation is one to many
+
+        public List<HotelRoom> HotelRooms { get; set; }
     }
 }

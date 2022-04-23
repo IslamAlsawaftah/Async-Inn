@@ -25,15 +25,21 @@ namespace AsyncInn.Models.Servieces
 
             public async Task<Amenity> GetAmenity(int id)
             {
-                Amenity amenity = await _context.Amenities.FindAsync(id);
-                return amenity;
+            // populate the navigation property details within the return object.
+            return await _context.Amenities
+                                     .Include(a => a.RoomAmenity)
+                                     .ThenInclude(b => b.Amenity)
+                                     .FirstOrDefaultAsync(x => x.Id==id);
             }
 
             public async Task<List<Amenity>> GetAmenities()
             {
-                var ameneties = await _context.Amenities.ToListAsync();
-                return ameneties;
-            }
+            // populate the navigation property details within the return object.
+            return await _context.Amenities
+                                 .Include(a => a.RoomAmenity)
+                                 .ThenInclude(b => b.Amenity)
+                                 .ToListAsync();
+        }
 
             public async Task<Amenity> UpdateAmenity(int id, Amenity amenity)
             {

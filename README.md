@@ -2,6 +2,49 @@
 
 #### Islam Alsawaftah / 13-4-2022
 
+#### Amenities Entity
+
+| Route | example data objects that get returned |
+| ----------- |----------- |
+| GET: api/Amenities | return all amenities |
+| GET: api/Amenities/\{id} | return specific amenity |
+| PUT: api/Amenities/\{id} | update specific amenity |
+| POST: api/Amenities | add new amenity |
+| DELETE: api/Amenities/\{id} | delete specific amenity |
+
+
+#### HotelRooms Entity
+
+| Route | example data objects that get returned |
+| ----------- |----------- |
+| GET: api/HotelRooms | return all Hotel Rooms |
+| GET: api/HotelRooms/\{hotelId}/Rooms/\{roomNumber} | return all room details for a specific room |
+| PUT: api/HotelRooms/\{hotelId}/Rooms/\{roomNumber} |  update the details of a specific room |
+| POST: api/HotelRooms/\{hotelId}\/Rooms |  to add a room to a hotel |
+| DELETE: api/HotelRooms/\{hotelId}\/Rooms/\{roomNumber} | delete a specific room from a hotel |
+
+#### Hotel Entity
+
+| Route | example data objects that get returned |
+| ----------- |----------- |
+| GET: api/Hotels | return all hotels |
+| GET: api/Hotels/\{id} | return specific hotel |
+| PUT: api/Hotels/\{id} | update specific hotel |
+| POST: api/Hotels | add new hotel |
+| DELETE: api/Hotels/\{id} | delete specific hotel |
+
+#### Room Entity
+
+| Route | example data objects that get returned |
+| ----------- |----------- |
+| GET: api/Rooms | return all rooms |
+| GET: api/Rooms/\{id} | return specific room |
+| PUT: api/Rooms/\{id} | update specific room |
+| POST: api/Rooms | add new room |
+| POST: api/Rooms/\{roomId}\/Amenity/\{amenityId} | delete specific aminity from room|
+| DELETE: api/Rooms/\{id} | delete specific hotel |
+| DELETE: api/Rooms/\{roomId}\/Amenity/\{amenityId} | delete specific aminity from room |
+
 refactor the project to allow and implement dependency injection. keep the current behavior of our API server the same, and only refactoring the architecture.
 
 Dependency Injection (DI) is a software design pattern. It allows us to develop loosely-coupled code. 
