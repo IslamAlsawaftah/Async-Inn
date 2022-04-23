@@ -38,7 +38,11 @@ namespace AsyncInn
             services.AddTransient<IRoom, RoomServieces>();
             services.AddTransient<IHotel, HotelServices>();
             services.AddTransient<IAmenity, AmenityServieces>();
-
+            services.AddTransient<IHotelRoom, HotelRoomServiece>();
+            // max depth is 32, to fix infite loop
+            services.AddControllers().AddNewtonsoftJson(
+                opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+           );
             services.AddControllers(); // register my controller
         }
 
