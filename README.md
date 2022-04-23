@@ -2,7 +2,7 @@
 
 #### Islam Alsawaftah / 13-4-2022
 
-#### Amenities Entity
+#### Amenity Entity
 
 | Route | example data objects that get returned |
 | ----------- |----------- |
