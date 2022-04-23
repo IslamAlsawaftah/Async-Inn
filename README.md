@@ -2,7 +2,7 @@
 
 #### Islam Alsawaftah / 13-4-2022
 
-#### Amenity Entity
+#### Amenity 
 
 | Route | example data objects that get returned |
 | ----------- |----------- |
@@ -13,7 +13,7 @@
 | DELETE: api/Amenities/\{id} | delete specific amenity |
 
 
-#### HotelRooms Entity
+#### HotelRooms 
 
 | Route | example data objects that get returned |
 | ----------- |----------- |
@@ -23,7 +23,7 @@
 | POST: api/HotelRooms/\{hotelId}\/Rooms |  to add a room to a hotel |
 | DELETE: api/HotelRooms/\{hotelId}\/Rooms/\{roomNumber} | delete a specific room from a hotel |
 
-#### Hotel Entity
+#### Hotel 
 
 | Route | example data objects that get returned |
 | ----------- |----------- |
@@ -33,7 +33,7 @@
 | POST: api/Hotels | add new hotel |
 | DELETE: api/Hotels/\{id} | delete specific hotel |
 
-#### Room Entity
+#### Room 
 
 | Route | example data objects that get returned |
 | ----------- |----------- |
