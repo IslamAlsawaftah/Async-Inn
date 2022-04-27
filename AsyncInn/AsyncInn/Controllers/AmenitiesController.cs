@@ -17,6 +17,8 @@ namespace AsyncInn.Controllers
     {
         private readonly IAmenity _amenity;
 
+        // constructor injection
+
         public AmenitiesController(IAmenity amenity)
         {
             _amenity = amenity;

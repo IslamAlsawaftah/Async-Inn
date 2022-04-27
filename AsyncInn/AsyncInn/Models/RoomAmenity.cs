@@ -2,7 +2,7 @@
 {
     public class RoomAmenity
     {
-        public int AmenetiesID { get; set; }
+        public int AmenityID { get; set; }
         public int RoomID { get; set; }
 
         //Navigation property

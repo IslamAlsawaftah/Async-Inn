@@ -33,8 +33,8 @@ namespace AsyncInn.Data
           );
             modelBuilder.Entity<Room>().HasData(
              new Room { Id = 1, Name = "Studio",Layout = 0 },
-             new Room { Id = 2, Name = "One Bedroom", Layout = 1 },
-             new Room { Id = 3, Name = "Two Bedroom", Layout = 2 }
+             new Room { Id = 2, Name = "One Bedroom", Layout = (Layout)1 },
+             new Room { Id = 3, Name = "Two Bedroom", Layout = (Layout)2 }
 
            );
             // every table should have a primary key,  HotelRoom didnt have it so we solve it like this:
@@ -45,7 +45,7 @@ namespace AsyncInn.Data
             // every table should have a primary key,  HotelRoom didnt have it so we solve it like this:
             modelBuilder.Entity<RoomAmenity>().HasKey(
                 // new object , this object will be the PK
-                roomamenity => new { roomamenity.AmenetiesID, roomamenity.RoomID } // define composit key, marked as primary key
+                roomamenity => new { roomamenity.AmenityID, roomamenity.RoomID } // define composit key, marked as primary key
                 );
         }
     }

@@ -15,13 +15,13 @@ namespace AsyncInn.Models.Servieces
         {
             _context = context;
         }
-        public async Task<HotelRoom> Create(HotelRoom hotelRoom)
+        public async Task<HotelRoom> Create(int id ,HotelRoom hotelRoom)
         {
+            hotelRoom.HotelId = id;
             _context.Entry(hotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return hotelRoom;
         }
-
         public async Task<HotelRoom> GetHotelRoom(int HotelId, int RoomNum)
         {
             return await _context.HotelRooms.Include(hr => hr.Room)
@@ -29,6 +29,7 @@ namespace AsyncInn.Models.Servieces
                                             .Include(hr =>hr.Hotel)
                                             .ThenInclude(h =>h.HotelRooms)
                                             .FirstOrDefaultAsync(x => x.HotelId == HotelId && x.RoomNum == RoomNum); // because i want one hotelroom
+
         }
 
         public async Task<List<HotelRoom>> GetHotelRooms()
