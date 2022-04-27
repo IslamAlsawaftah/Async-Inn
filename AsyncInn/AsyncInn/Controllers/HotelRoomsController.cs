@@ -22,14 +22,14 @@ namespace AsyncInn.Controllers
             _hotelRoom = hotelRoom;
         }
 
-        // GET: api/HotelRooms
+        // GET: api/HotelRoom/{hotelId}/Rooms
         [HttpGet("{hotelId}/Rooms")]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
         {
             return Ok(await _hotelRoom.GetHotelRooms());
         }
 
-        // GET: api/HotelRooms/5
+        // GET: api/HotelRoom/{hotelId}/Rooms/{roomNumber}
         [HttpGet("{hotelId}/Rooms/{roomNumber}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int HotelID, int RoomNumber)
         {
@@ -43,7 +43,7 @@ namespace AsyncInn.Controllers
             return hotelRoom;
         }
 
-        // PUT: api/HotelRooms/5
+        // PUT: api/HotelRoom/{hotelId}/Rooms/{roomNumber}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{hotelId}/Rooms/{roomNumber}")]
         public async Task<IActionResult> PutHotelRoom(int HotelID, int RoomNumber, HotelRoom hotelRoom)
@@ -56,16 +56,16 @@ namespace AsyncInn.Controllers
             return Ok(modifiedHotelRoom);
         }
 
-        // POST: api/HotelRooms
+        // POST: api/HotelRoom/{hotelId}/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{hotelId}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int id,HotelRoom hotelRoom)
         {
-            HotelRoom newHotelRoom = await _hotelRoom.Create(hotelRoom);
+            HotelRoom newHotelRoom = await _hotelRoom.Create(id,hotelRoom);
             return Ok(newHotelRoom);
         }
 
-        // DELETE: api/HotelRooms/5
+        // DELETE: api/HotelRoom/{hotelId}/Rooms/{roomNumber}
         [HttpDelete("{hotelId}/Rooms/{roomNumber}")]
         public async Task<IActionResult> DeleteHotelRoom(int HotelID, int RoomNumber)
         {

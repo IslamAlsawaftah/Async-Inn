@@ -2,6 +2,7 @@
 using AsyncInn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AsyncInn.Models.Servieces
@@ -23,13 +24,25 @@ namespace AsyncInn.Models.Servieces
 
         public async Task<Hotel> GetHotel(int id)
         {
-            Hotel hotel = await _context.Hotels.FindAsync(id);
+            Hotel hotel = await _context.Hotels
+                                        .Where(h => h.Id == id)
+                                        .Include(h => h.HotelRooms)
+                                        .ThenInclude(hr => hr.Room)
+                                        .ThenInclude(ra => ra.RoomAmenity)
+                                        .ThenInclude(a => a.Amenity)
+                                        .FirstOrDefaultAsync();
+   
             return hotel;
         }
 
         public async Task<List<Hotel>> GetHotels()
         {
-            var hotels = await _context.Hotels.ToListAsync();
+            var hotels = await _context.Hotels
+                                       .Include(h => h.HotelRooms)
+                                       .ThenInclude(hr => hr.Room)
+                                       .ThenInclude(ra => ra.RoomAmenity)
+                                       .ThenInclude(a => a.Amenity)
+                                       .ToListAsync();
             return hotels;
         }
 

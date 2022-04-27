@@ -55,7 +55,7 @@ namespace AsyncInn.Models.Servieces
         {
             RoomAmenity amenity = new RoomAmenity()
             {
-                AmenetiesID = amenityId,
+                AmenityID = amenityId,
                 RoomID = roomId
             };
             _context.Entry(amenity).State = EntityState.Added; // because we are creating a new one
@@ -63,7 +63,7 @@ namespace AsyncInn.Models.Servieces
         }
         public async Task RemoveAmenityFromRoom(int roomId, int amenityId)
         {
-            var removedAmenity = await _context.RoomAmenities.FirstOrDefaultAsync(i => i.RoomID == roomId && i.AmenetiesID == amenityId);
+            var removedAmenity = await _context.RoomAmenities.FirstOrDefaultAsync(i => i.RoomID == roomId && i.AmenityID == amenityId);
             _context.RoomAmenities.Remove(removedAmenity);
             //_context.Entry(removedAmenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
