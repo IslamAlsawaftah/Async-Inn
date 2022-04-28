@@ -2,6 +2,10 @@
 
 #### Islam Alsawaftah / 13-4-2022
 
+#### Lab 16
+
+Add onto your current Async Inn application by cleaning up input and outputs of your controllers to be DTOs.
+
 #### Amenity 
 
 | Route | example data objects that get returned |
