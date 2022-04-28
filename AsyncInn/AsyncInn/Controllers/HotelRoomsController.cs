@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
+using AsyncInn.Models.DTO;
 
 namespace AsyncInn.Controllers
 {
@@ -24,14 +25,14 @@ namespace AsyncInn.Controllers
 
         // GET: api/HotelRoom/{hotelId}/Rooms
         [HttpGet("{hotelId}/Rooms")]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
             return Ok(await _hotelRoom.GetHotelRooms());
         }
 
         // GET: api/HotelRoom/{hotelId}/Rooms/{roomNumber}
         [HttpGet("{hotelId}/Rooms/{roomNumber}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int HotelID, int RoomNumber)
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int HotelID, int RoomNumber)
         {
             var hotelRoom = await _hotelRoom.GetHotelRoom(HotelID,RoomNumber);
 
@@ -46,9 +47,9 @@ namespace AsyncInn.Controllers
         // PUT: api/HotelRoom/{hotelId}/Rooms/{roomNumber}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{hotelId}/Rooms/{roomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(int HotelID, int RoomNumber, HotelRoom hotelRoom)
+        public async Task<IActionResult> PutHotelRoom(int HotelID, int RoomNumber, HotelRoomDTO hotelRoom)
         {
-            if (HotelID != hotelRoom.HotelId && RoomNumber != hotelRoom.RoomNum)
+            if (HotelID != hotelRoom.HotelID && RoomNumber != hotelRoom.RoomNumber)
             {
                 return BadRequest();
             }
@@ -59,9 +60,9 @@ namespace AsyncInn.Controllers
         // POST: api/HotelRoom/{hotelId}/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{hotelId}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int id,HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoomDTO hotelRoom)
         {
-            HotelRoom newHotelRoom = await _hotelRoom.Create(id,hotelRoom);
+            HotelRoomDTO newHotelRoom = await _hotelRoom.Create(hotelRoom);
             return Ok(newHotelRoom);
         }
 
