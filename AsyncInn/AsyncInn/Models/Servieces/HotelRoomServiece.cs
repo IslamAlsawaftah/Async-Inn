@@ -24,18 +24,20 @@ namespace AsyncInn.Models.Servieces
         }
         public async Task<HotelRoom> GetHotelRoom(int HotelId, int RoomNum)
         {
-            return await _context.HotelRooms.Include(hr => hr.Room)
-                                            .ThenInclude(r => r.RoomAmenity)
-                                            .Include(hr =>hr.Hotel)
-                                            .ThenInclude(h =>h.HotelRooms)
-                                            .FirstOrDefaultAsync(x => x.HotelId == HotelId && x.RoomNum == RoomNum); // because i want one hotelroom
-
+            return await _context.HotelRooms.Include(x => x.Room)
+                                                    .ThenInclude(x => x.RoomAmenity)
+                                                    .ThenInclude(x => x.Amenity)
+                                                    .Include(r => r.Hotel)
+                                                    .ThenInclude(x => x.HotelRooms)
+                                                    .FirstOrDefaultAsync(x => x.HotelId == HotelId && x.RoomNum == RoomNum);
+        
         }
 
         public async Task<List<HotelRoom>> GetHotelRooms()
         {
             return await _context.HotelRooms.Include(hr => hr.Room)
                                             .ThenInclude(r => r.RoomAmenity)
+                                            .ThenInclude(x => x.Amenity)
                                             .Include(hr => hr.Hotel)
                                             .ThenInclude(h => h.HotelRooms)
                                             .ToListAsync(); // list of hotelroom
