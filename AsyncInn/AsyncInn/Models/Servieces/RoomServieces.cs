@@ -2,6 +2,7 @@
 using AsyncInn.Models.DTO;
 using AsyncInn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace AsyncInn.Models.Servieces
             {
                 Id = room.ID,
                 Name = room.Name,
-                Layout = (Layout)room.Layout
+                Layout = (Layout) Enum.Parse(typeof(Layout), room.Layout)
             };
             _context.Entry(room1).State = EntityState.Added;
             await _context.SaveChangesAsync();
@@ -37,7 +38,7 @@ namespace AsyncInn.Models.Servieces
                {
                    ID = id,
                    Name = room.Name,
-                   Layout = (int)room.Layout,
+                   Layout = room.Layout.ToString(),
                    Amenities = room.RoomAmenity
                     .Select(amenity => new AmenityDTO
                     {
@@ -56,7 +57,7 @@ namespace AsyncInn.Models.Servieces
                 {
                     ID = room.Id,
                     Name = room.Name,
-                    Layout = (int)room.Layout,
+                    Layout = room.Layout.ToString(),
                     Amenities = room.RoomAmenity
                      .Select(amenity => new AmenityDTO
                      {
@@ -72,7 +73,7 @@ namespace AsyncInn.Models.Servieces
             {
                 Id = room.ID,
                 Name = room.Name,
-                Layout = (Layout)room.Layout
+                Layout = (Layout)Enum.Parse(typeof(Layout), room.Layout)
             };
             _context.Entry(room1).State = EntityState.Modified;
             await _context.SaveChangesAsync();
