@@ -5,6 +5,8 @@ using AsyncInn.Models.Servieces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,24 @@ namespace AsyncInn
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // if we want to change error message we add this line, default behaviour
+             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = false; // Adding digits to the password is not mandatory
+                // to remove this from being appear
+                /*
+                 "errors": {
+                 "Password": [
+                 "Passwords must have at least one digit ('0'-'9')."
+                  ]
+                 */
+                // There are other options like this
+            })
+            .AddEntityFrameworkStores<AsyncInnDbContext>();
             services.AddDbContext<AsyncInnDbContext>(options => {
                 // Our DATABASE_URL from js days
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -39,11 +59,14 @@ namespace AsyncInn
             services.AddTransient<IHotel, HotelServices>();
             services.AddTransient<IAmenity, AmenityServieces>();
             services.AddTransient<IHotelRoom, HotelRoomServiece>();
+            services.AddTransient<IUserService, IdentityUserService>();
+
             // max depth is 32, to fix infite loop
             services.AddControllers().AddNewtonsoftJson(
                 opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
            );
             services.AddControllers(); // register my controller
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

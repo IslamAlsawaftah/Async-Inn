@@ -1,9 +1,10 @@
 ﻿using AsyncInn.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AsyncInn.Data
 {
-    public class AsyncInnDbContext : DbContext
+    public class AsyncInnDbContext : IdentityDbContext<ApplicationUser>
     {
         //to include a new table into your database
         public DbSet<Hotel> Hotels { get; set; }
@@ -17,7 +18,7 @@ namespace AsyncInn.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // This calls the base method, but does nothing
-            // base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Amenity>().HasData(
               new Amenity { Id = 1, Name = "coffee maker" },

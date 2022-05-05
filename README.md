@@ -2,6 +2,38 @@
 
 #### Islam Alsawaftah / 13-4-2022
 
+#### Lab 18
+ 
+##### Identity
+
+Identity is the ability to add Authentication and Authorization to your web application. This includes registrations, logins, restricted access to specific members, and authentication through Facebook, Google, Twitter, etc…
+
+ASP.NET Core Identity was created to help with the security and management of users. It provides this abstraction layer between the application and the users/role data. We can use the API in it’s entirety, or just bits and pieces as we need (such as the salting/hashing by itself) or email services. There is a lot of flexibility within ASP.NET Core Identity. We have the ability to take or leave whatever we want. Identity combines well with EFCore and SQL Server.
+
+#### Default Identity Tables with relations
+
+![](identity.png)
+
+#### Register
+
+![](register.png)
+
+#### Login
+
+![](Login.png)
+
+
+#### Some validations while registration
+
+##### UserName validation
+![](username-validation.png)
+
+##### Password validation
+![](password-validation.png)
+
+##### Email validation
+![](email-validation.png)
+
 #### Lab 16
 
 Add onto your current Async Inn application by cleaning up input and outputs of your controllers to be DTOs.
