@@ -20,7 +20,7 @@ ASP.NET Core Identity was created to help with the security and management of us
 
 #### Login
 
-![](Login.png)
+![](login.png)
 
 
 #### Some validations while registration
