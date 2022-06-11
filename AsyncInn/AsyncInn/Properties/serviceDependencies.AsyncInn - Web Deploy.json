@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "apis1": {
+      "apiEndpoint": "https://asyncinnapi.azure-api.net/A",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/AsyncInnapi/apis/APIAsyncInn",
+      "type": "apis.azure"
+    }
+  }
+}
