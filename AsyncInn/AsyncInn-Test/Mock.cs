@@ -34,23 +34,6 @@ namespace AsyncInn_Test
             _db?.Dispose();
             _connection?.Dispose();
         }
-
-        protected async Task<Amenity> CreateAndSaveTestAmenity()
-        {
-            var amenity = new Amenity { Name = "Test" };
-            _db.Amenities.Add(amenity);
-            await _db.SaveChangesAsync();
-            Assert.NotEqual(0, amenity.Id); // Sanity check
-            return amenity;
-        }
-
-        protected async Task<Room> CreateAndSaveTestRoom()
-        {
-            var room = new Room {Name = "TestRoom", Layout = 0 };
-            _db.Rooms.Add(room);
-            await _db.SaveChangesAsync();
-            Assert.NotEqual(0, room.Id); // Sanity check
-            return room;
-        }
+    
     }
 }
