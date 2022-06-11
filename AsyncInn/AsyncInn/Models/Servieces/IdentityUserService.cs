@@ -1,9 +1,10 @@
-﻿using AsyncInn.Models.Api;
-using AsyncInn.Models.DTO;
+﻿using AsyncInn.Models.DTO;
 using AsyncInn.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AsyncInn.Models.Servieces
@@ -12,10 +13,14 @@ namespace AsyncInn.Models.Servieces
     {
         // Connect to Identity’s “User Manager” to do the database work
         private  UserManager<ApplicationUser> _userManager;
+        private JwtTokenService tokenService;
+
         // ApplicationUser we want to manage it
-        public IdentityUserService(UserManager<ApplicationUser> manager)
+        public IdentityUserService(UserManager<ApplicationUser> manager, JwtTokenService jwtTokenService)
         {
             _userManager = manager;
+            tokenService = jwtTokenService;
+
         }
         public async Task<UserDto> Authenticate(string username, string password)
         {
@@ -28,12 +33,12 @@ namespace AsyncInn.Models.Servieces
                 //PasswordVerificationResult result = _userManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, password);
                if (await _userManager.CheckPasswordAsync(user, password))
                 {
-                   UserDto userDto = new UserDto
+                    return new UserDto
                     {
-                        Id = user.Id,
                         Username = user.UserName,
-                    };
-                    return userDto;
+                        Token = await tokenService.GetToken(user, System.TimeSpan.FromDays(2)),
+                        Roles = await _userManager.GetRolesAsync(user)
+                    }; 
                 }
                 //var user = UserManager.FindByNameAsync(username);
                 //return SignInManager.UserManager.CheckPassword(user, Password);
@@ -54,12 +59,17 @@ namespace AsyncInn.Models.Servieces
             // CreateAsync : create user, and password hash password and save it in database
             if (result.Succeeded)
             {
-                UserDto userDto = new UserDto
+                // here goes the roles specifications ... 
+                IList<string> Roles = new List<string>();
+                Roles.Add("user");
+                await _userManager.AddToRolesAsync(user, Roles);
+
+                return new UserDto
                 {
-                    Id = user.Id,
                     Username = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromDays(2)),
+                    Roles = await _userManager.GetRolesAsync(user)
                 };
-                return userDto;
             }
             foreach (var error in result.Errors)
             {
@@ -72,6 +82,14 @@ namespace AsyncInn.Models.Servieces
                 modelState.AddModelError(errorKey, error.Description);
             }
             return null;
+        }
+        public async Task<UserDto> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await _userManager.GetUserAsync(principal);
+            return new UserDto
+            {
+                Username = user.UserName,
+            };
         }
     }
 }
