@@ -2,6 +2,7 @@ using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using AsyncInn.Models.Servieces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -61,11 +62,32 @@ namespace AsyncInn
             services.AddTransient<IAmenity, AmenityServieces>();
             services.AddTransient<IHotelRoom, HotelRoomServiece>();
             services.AddTransient<IUserService, IdentityUserService>();
+            services.AddScoped<JwtTokenService>();
+
 
             // max depth is 32, to fix infite loop
             services.AddControllers().AddNewtonsoftJson(
                 opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
            );
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("create", policy => policy.RequireClaim("persmissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("persmissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("persmissions", "delete"));
+            });
+            // Add the wiring for adding "Authentication" for our API
+            // "We want the system to always use these "Schemes" to authenticate us
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+              .AddJwtBearer(options =>
+              {
+       // Tell the authenticaion scheme "how/where" to validate the token + secret
+       options.TokenValidationParameters = JwtTokenService.GetValidationParameters(Configuration);
+              });
             services.AddSwaggerGen(options =>
             {
                 // Make sure get the "using Statement"
@@ -88,6 +110,8 @@ namespace AsyncInn
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSwagger(options => {
                 options.RouteTemplate = "/api/{documentName}/swagger.json";
             });

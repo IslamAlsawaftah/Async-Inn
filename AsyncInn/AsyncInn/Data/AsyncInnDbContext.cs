@@ -1,6 +1,9 @@
 ﻿using AsyncInn.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace AsyncInn.Data
 {
@@ -27,13 +30,13 @@ namespace AsyncInn.Data
 
             );
             modelBuilder.Entity<Hotel>().HasData(
-            new Hotel { Id = 1, Name = "Sheraton", StreetAddress= "15205 North Kierland Blvd. Suite 100", City= "Anchorage", State= "Alaska", Country="US", Phone="123" },
+            new Hotel { Id = 1, Name = "Sheraton", StreetAddress = "15205 North Kierland Blvd. Suite 100", City = "Anchorage", State = "Alaska", Country = "US", Phone = "123" },
             new Hotel { Id = 2, Name = "Fairmont", StreetAddress = "854 Avocado Ave.", City = "Los Angeles", State = "California", Country = "US", Phone = "456" },
             new Hotel { Id = 3, Name = "Le Royal", StreetAddress = "298 Beachwalk ", City = "Jacksonville[f]", State = "Florida", Country = "US", Phone = "789" }
 
           );
             modelBuilder.Entity<Room>().HasData(
-             new Room { Id = 1, Name = "Studio",Layout = 0 },
+             new Room { Id = 1, Name = "Studio", Layout = 0 },
              new Room { Id = 2, Name = "One Bedroom", Layout = (Layout)1 },
              new Room { Id = 3, Name = "Two Bedroom", Layout = (Layout)2 }
 
@@ -48,6 +51,36 @@ namespace AsyncInn.Data
                 // new object , this object will be the PK
                 roomamenity => new { roomamenity.AmenityID, roomamenity.RoomID } // define composit key, marked as primary key
                 );
+            SeedRoles(modelBuilder, "DistrictManager", "create", "update", "delete");
+            SeedRoles(modelBuilder, "PropertyManager", "create", "update");
+            SeedRoles(modelBuilder, "Agent", "update");
+            SeedRoles(modelBuilder, "Anonymous");
+
+        }
+        private int id = 1;
+        private void SeedRoles(ModelBuilder modelBuilder, string roleName, params string[] permissions)
+            {
+                var role = new IdentityRole
+                {
+                    Id = roleName.ToLower(),
+                    Name = roleName,
+                    NormalizedName = roleName.ToUpper(),
+                    ConcurrencyStamp = Guid.Empty.ToString()
+
+                };
+                modelBuilder.Entity<IdentityRole>().HasData(role);
+
+                var RoleClaims = permissions.Select(permission =>
+                new IdentityRoleClaim<string>
+                {
+                    Id = id++,
+                    RoleId = role.Id,
+                    ClaimType = "permissions",
+                    ClaimValue = permission
+                }
+                ).ToArray();
+
+                modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(RoleClaims);
+            }
         }
     }
-}

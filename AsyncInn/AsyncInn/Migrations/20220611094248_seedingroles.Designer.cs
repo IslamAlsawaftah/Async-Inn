@@ -4,14 +4,16 @@ using AsyncInn.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AsyncInn.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    partial class AsyncInnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220611094248_seedingroles")]
+    partial class seedingroles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -286,31 +288,24 @@ namespace AsyncInn.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "districtmanager",
+                            Id = "administrator",
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "DistrictManager",
-                            NormalizedName = "DISTRICTMANAGER"
+                            Name = "administrator",
+                            NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "propertymanager",
+                            Id = "editor",
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "PropertyManager",
-                            NormalizedName = "PROPERTYMANAGER"
+                            Name = "editor",
+                            NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "agent",
+                            Id = "user",
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Agent",
-                            NormalizedName = "AGENT"
-                        },
-                        new
-                        {
-                            Id = "anonymous",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Anonymous",
-                            NormalizedName = "ANONYMOUS"
+                            Name = "user",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -343,42 +338,42 @@ namespace AsyncInn.Migrations
                             Id = 1,
                             ClaimType = "permissions",
                             ClaimValue = "create",
-                            RoleId = "districtmanager"
+                            RoleId = "administrator"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "permissions",
                             ClaimValue = "update",
-                            RoleId = "districtmanager"
+                            RoleId = "administrator"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "permissions",
                             ClaimValue = "delete",
-                            RoleId = "districtmanager"
+                            RoleId = "administrator"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "permissions",
                             ClaimValue = "create",
-                            RoleId = "propertymanager"
+                            RoleId = "editor"
                         },
                         new
                         {
                             Id = 5,
                             ClaimType = "permissions",
                             ClaimValue = "update",
-                            RoleId = "propertymanager"
+                            RoleId = "editor"
                         },
                         new
                         {
                             Id = 6,
                             ClaimType = "permissions",
-                            ClaimValue = "update",
-                            RoleId = "agent"
+                            ClaimValue = "create",
+                            RoleId = "user"
                         });
                 });
 

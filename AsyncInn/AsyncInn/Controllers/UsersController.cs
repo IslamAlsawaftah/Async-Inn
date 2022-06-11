@@ -1,6 +1,7 @@
 ﻿using AsyncInn.Models.Api;
 using AsyncInn.Models.DTO;
 using AsyncInn.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,6 +19,7 @@ namespace AsyncInn.Controllers
             _userService = userService;
         }
         //POST: -http://localhost:62689/api/Users/Register
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>> Register([FromBody] RegisterUser data)
         {
@@ -45,26 +47,26 @@ namespace AsyncInn.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        [AllowAnonymous]
         [HttpPost("Login")]
-        public async Task<ActionResult<UserDto>> Login(LoginData loginData)
+        public async Task<ActionResult<UserDto>> Login(LoginData loginDTO)
         {
-            try
+            var user = await _userService.Authenticate(loginDTO.Username, loginDTO.Password);
+
+            if (user == null)
             {
-                var user = await _userService.Authenticate(loginData.Username, loginData.Password);
-                if (user != null)
-                {
-                    return user;
-                }
-                else
-                {
-                    return BadRequest("User not found");
-                }
+                return Unauthorized();
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+
+            return user;
+        }
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<UserDto>> Me()
+        {
+            // Following the [Authorize] phase, this.User will be ... you.
+            // Put a breakpoint here and inspect to see what's passed to our getUser method
+            return await _userService.GetUser(this.User);
         }
     }
 }
