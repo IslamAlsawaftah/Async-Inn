@@ -2,6 +2,62 @@
 
 #### Islam Alsawaftah / 13-4-2022
 
+#### Lab 17
+
+Swagger Documentation
+
+Install Dependency: Swashbuckle.AspnetCore
+
+In Startup.cs, configure a new service dependency
+
+```
+public void ConfigureServices()
+{
+  ...
+   services.AddSwaggerGen(options =>
+   {
+     // Make sure get the "using Statement"
+     options.SwaggerDoc("v1", new OpenApiInfo()
+     {
+       Title = "School Demo",
+       Version = "v1",
+     });
+   });
+
+}
+```
+
+Create the new routes so that swagger "works"
+
+In Startup.cs, add this to Configure()
+
+```
+app.UseSwagger( options => {
+ options.RouteTemplate = "/api/{documentName}/swagger.json";
+});
+```
+documentName is the version you gave in the previous step
+Now ...
+
+https://localhost:PORT/api/v1/swagger.json
+
+Boom! You get a fully configured Swagger compatible JSON definition.
+
+You can plug this directly into Swagger.io and see your live API
+
+Even better, let's serve our own docs...
+```
+app.UseSwaggerUI( options => {
+  options.SwaggerEndpoint("/api/v1/swagger.json", "Student Demo");
+  options.RoutePrefix = "docs";
+});
+```
+
+hit : http://localhost:PORT/docs is the actual documentation for your API.
+
+
+http://localhost:PORT/docs is the actual documentation for your API.
+
 #### Lab 18
  
 ##### Identity

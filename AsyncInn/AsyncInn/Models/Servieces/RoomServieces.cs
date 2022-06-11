@@ -36,7 +36,7 @@ namespace AsyncInn.Models.Servieces
 
                .Select(room => new RoomDTO
                {
-                   ID = id,
+                   ID = room.Id,
                    Name = room.Name,
                    Layout = room.Layout.ToString(),
                    Amenities = room.RoomAmenity
