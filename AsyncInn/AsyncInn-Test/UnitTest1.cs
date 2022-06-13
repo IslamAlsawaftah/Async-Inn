@@ -97,14 +97,15 @@ namespace AsyncInn_Test
 
             RoomDTO roomDTO = new RoomDTO
             {
+                ID = 1,
                 Name = "one bedroom",
-                Layout = ""
+                Layout = "onebedroom"
             };
 
 
             var room = await RoomService.UpdateRoom(1, roomDTO);
             var room1 = RoomService.GetRoom(1).Result;
-            Assert.NotEqual("", room.Name);
+            Assert.NotEqual("two bedroom", room.Name);
         }
         [Fact]
         public async void TestUpdateAmenity()
